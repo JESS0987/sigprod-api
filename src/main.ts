@@ -12,7 +12,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Archivos estáticos
-const staticPath = join(__dirname, '..', '..', 'public');
+const staticPath = join(__dirname, '..', 'public');
 console.log('📁 Static assets path:', staticPath);
 app.useStaticAssets(staticPath);
   // CORS
