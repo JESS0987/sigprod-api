@@ -12,7 +12,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Archivos estáticos
-  app.useStaticAssets(join(__dirname, '..', 'public'));
+app.useStaticAssets(join(__dirname, '..', '..', 'public'));
 
   // CORS
   app.enableCors({
