@@ -2,12 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Global prefix
   app.setGlobalPrefix('api');
+
+  // Archivos estáticos
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   // CORS
   app.enableCors({
@@ -32,9 +37,7 @@ async function bootstrap() {
       `## Sistema Integral de Gestión de Producción de Software
       
 **TechSoft Solutions S.A.S.** - Bucaramanga, Santander, Colombia
-
 API REST para la plataforma SIGPROD que unifica todos los módulos del ciclo de vida del desarrollo de software.
-
 ### Módulos disponibles:
 - 🔐 **Auth** - Autenticación JWT
 - 👥 **Users** - Gestión de usuarios y roles
