@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIGPROD — Roles del Equipo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1a1e2a;
+      --surface3: #1f2433;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #eef0f6;
+      --text-muted: #7a82a0;
+      --text-dim: #4a5070;
+      --accent: #7c6af7;
+      --accent-glow: rgba(124,106,247,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* BG decorative */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse, rgba(124,106,247,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 2.5rem 2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .logo-block { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, #7c6af7, #a78bfa);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-text { font-family: 'Syne', sans-serif; }
+    .logo-text h1 { font-size: 20px; font-weight: 800; letter-spacing: 0.06em; color: var(--text); }
+    .logo-text p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px; }
+
+    .header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .api-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 14px;
+      font-size: 12px; color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .api-badge:hover { border-color: var(--accent); color: var(--accent); }
+    .api-badge::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+      padding: 3.5rem 2rem 2.5rem;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .hero-left { max-width: 560px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-glow);
+      border: 1px solid rgba(124,106,247,0.25); border-radius: 20px;
+      padding: 5px 12px; margin-bottom: 1.2rem;
+    }
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-desc { font-size: 15px; color: var(--text-muted); max-width: 480px; line-height: 1.7; }
+
+    .hero-stats {
+      display: flex; flex-direction: column; gap: 10px;
+      min-width: 200px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .stat-icon { font-size: 22px; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── CREDENTIALS BAR ── */
+    .cred-bar {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto 2rem;
+      padding: 0 2rem;
+    }
+    .cred-box {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 20px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .cred-box .label { font-size: 12px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+    .cred-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 12px;
+    }
+    .cred-pill span { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); }
+    .cred-pill em { font-style: normal; font-size: 11px; color: var(--text-muted); }
+
+    /* ── GRID ── */
+    .section { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .section-heading {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+    }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── ROLE CARD ── */
+    .role-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      animation: fadeUp 0.5s both;
+    }
+    .role-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-top {
+      padding: 1.25rem 1.25rem 1rem;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .role-avatar {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      flex-shrink: 0; letter-spacing: 0.02em;
+    }
+    .card-meta { flex: 1; min-width: 0; }
+    .card-meta h3 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .card-meta .email {
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .role-num {
+      font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+      color: var(--border-hover); line-height: 1;
+      padding-top: 2px;
+    }
+
+    .card-divider { height: 1px; background: var(--border); margin: 0 1.25rem; }
+
+    .card-body { padding: 1rem 1.25rem; }
+    .main-resp {
+      font-size: 13px; color: var(--text-muted); line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .tasks-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .task-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .task-list li {
+      font-size: 12.5px; color: var(--text-muted);
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 5px 8px; border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .task-list li:hover { background: var(--surface2); color: var(--text); }
+    .task-list li::before {
+      content: ''; width: 4px; height: 4px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+
+    .card-footer {
+      padding: 10px 1.25rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .tag {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      border: 1px solid; font-weight: 500; letter-spacing: 0.02em;
+    }
+    .api-link {
+      font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace;
+      text-decoration: none; padding: 4px 8px; border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .api-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 2;
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 2rem;
+      font-size: 12px; color: var(--text-dim);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-block">
+    <div class="logo-icon">⚙️</div>
+    <div class="logo-text">
+      <h1>SIGPROD</h1>
+      <p>TechSoft Solutions S.A.S.</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="api-badge" href="https://sigprod-api-production.up.railway.app/api/docs" target="_blank">
+      API Docs · Railway
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Sistema Integral · 2026</div>
+    <h2 class="hero-title">Roles del<br /><span>Equipo de Desarrollo</span></h2>
+    <p class="hero-desc">SIGPROD unifica en una sola plataforma los nueve roles del ciclo de vida del software. Cada actor accede a su módulo especializado con credenciales propias.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div>
+        <div class="stat-num">9</div>
+        <div class="stat-label">Roles activos</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div>
+        <div class="stat-num">9</div>
+        <div class="stat-label">Módulos interconectados</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔑</div>
+      <div>
+        <div class="stat-num">admin123</div>
+        <div class="stat-label">Contraseña de prueba</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cred-bar">
+  <div class="cred-box">
+    <span class="label">Credenciales de prueba</span>
+    <div class="cred-pill"><em>clave universal →</em><span>admin123</span></div>
+    <div class="cred-pill"><em>admin →</em><span>admin@sigprod.com</span></div>
+    <div class="cred-pill"><em>PO →</em><span>po@sigprod.com</span></div>
+    <div class="cred-pill"><em>PM →</em><span>pm@sigprod.com</span></div>
+    <div class="cred-pill"><em>BA →</em><span>analista@sigprod.com</span></div>
+    <div class="cred-pill"><em>FE →</em><span>frontend@sigprod.com</span></div>
+    <div class="cred-pill"><em>BE →</em><span>backend@sigprod.com</span></div>
+    <div class="cred-pill"><em>QA →</em><span>qa@sigprod.com</span></div>
+    <div class="cred-pill"><em>DevOps →</em><span>devops@sigprod.com</span></div>
+  </div>
+</div>
+
+<main class="section">
+  <div class="section-heading">Directorio de roles</div>
+  <div class="roles-grid" id="grid"></div>
+</main>
+
+<footer>
+  <p>SIGPROD · TechSoft Solutions S.A.S. · Bucaramanga, Santander · 2026</p>
+  <p style="margin-top:6px;">
+    API REST documentada en
+    <a href="https://sigprod-api-production.up.railway.app/api/docs" target="_blank">
+      sigprod-api-production.up.railway.app/api/docs
+    </a>
+  </p>
+</footer>
+
+<script>
+const roles = [
+  {
+    num: "01", code: "PO", title: "Product Owner",
+    email: "po@sigprod.com",
+    color: "#3b82f6", bg: "rgba(59,130,246,0.12)", tagBorder: "rgba(59,130,246,0.3)", tagText: "#93c5fd",
+    tagLabel: "Negocio",
+    main: "Define y prioriza el backlog del producto. Aprueba solicitudes de cambio y establece criterios de aceptación.",
+    tasks: [
+      "Gestionar y priorizar el product backlog",
+      "Aprobar historias de usuario y cambios",
+      "Definir criterios de aceptación",
+      "Comunicar la visión del producto al equipo",
+      "Validar incrementos de software en cada sprint"
+    ],
+    module: "Backlog / Requisitos"
+  },
+  {
+    num: "02", code: "SM", title: "Scrum Master",
+    email: "pm@sigprod.com",
+    color: "#10b981", bg: "rgba(16,185,129,0.12)", tagBorder: "rgba(16,185,129,0.3)", tagText: "#6ee7b7",
+    tagLabel: "Gestión",
+    main: "Gestiona sprints, cronograma de Gantt y facilita ceremonias ágiles. Identifica y remueve impedimentos del equipo.",
+    tasks: [
+      "Planificar y gestionar sprints",
+      "Administrar cronograma de Gantt",
+      "Facilitar daily standups y retrospectivas",
+      "Gestionar riesgos del proyecto",
+      "Monitorear velocidad y métricas del equipo"
+    ],
+    module: "Sprints / Gantt"
+  },
+  {
+    num: "03", code: "BA", title: "Analista de Negocio",
+    email: "analista@sigprod.com",
+    color: "#f59e0b", bg: "rgba(245,158,11,0.12)", tagBorder: "rgba(245,158,11,0.3)", tagText: "#fcd34d",
+    tagLabel: "Análisis",
+    main: "Traduce requisitos de negocio a historias de usuario, casos de uso y construye la matriz de trazabilidad.",
+    tasks: [
+      "Levantar y documentar requisitos funcionales",
+      "Escribir historias de usuario en formato Gherkin",
+      "Elaborar casos de uso del sistema",
+      "Construir y mantener la matriz de trazabilidad",
+      "Validar coherencia entre negocio y solución"
+    ],
+    module: "Historias / Requisitos"
+  },
+  {
+    num: "04", code: "AR", title: "Arquitecto de Software",
+    email: "ar@sigprod.com",
+    color: "#8b5cf6", bg: "rgba(139,92,246,0.12)", tagBorder: "rgba(139,92,246,0.3)", tagText: "#c4b5fd",
+    tagLabel: "Arquitectura",
+    main: "Define la arquitectura del sistema, el modelo de base de datos y el API contract con estándares técnicos.",
+    tasks: [
+      "Diseñar la arquitectura de tres capas",
+      "Modelar la base de datos MongoDB",
+      "Definir el API contract con OpenAPI 3.0",
+      "Establecer estándares técnicos del proyecto",
+      "Revisar y aprobar decisiones de diseño técnico"
+    ],
+    module: "Arquitectura / BD"
+  },
+  {
+    num: "05", code: "UI", title: "Diseñador UI/UX",
+    email: "ui@sigprod.com",
+    color: "#ec4899", bg: "rgba(236,72,153,0.12)", tagBorder: "rgba(236,72,153,0.3)", tagText: "#f9a8d4",
+    tagLabel: "Diseño",
+    main: "Crea el Design System, mockups y guía de estilos. Realiza el handoff de diseño al equipo de frontend.",
+    tasks: [
+      "Construir el Design System de SIGPROD",
+      "Diseñar mockups y wireframes de alta fidelidad",
+      "Elaborar la guía de estilos visual",
+      "Realizar handoff de diseño al frontend",
+      "Conducir pruebas de usabilidad con usuarios"
+    ],
+    module: "Design System"
+  },
+  {
+    num: "06", code: "FE", title: "Desarrollador Frontend",
+    email: "frontend@sigprod.com",
+    color: "#06b6d4", bg: "rgba(6,182,212,0.12)", tagBorder: "rgba(6,182,212,0.3)", tagText: "#67e8f9",
+    tagLabel: "Frontend",
+    main: "Implementa la SPA en React + TypeScript + Tailwind CSS y consume la API REST del sistema SIGPROD.",
+    tasks: [
+      "Desarrollar componentes React reutilizables",
+      "Consumir endpoints de la API REST",
+      "Aplicar el Design System en la UI",
+      "Manejar autenticación JWT y sesión",
+      "Optimizar rendimiento y accesibilidad"
+    ],
+    module: "SPA React / Tailwind"
+  },
+  {
+    num: "07", code: "BE", title: "Desarrollador Backend",
+    email: "backend@sigprod.com",
+    color: "#f97316", bg: "rgba(249,115,22,0.12)", tagBorder: "rgba(249,115,22,0.3)", tagText: "#fdba74",
+    tagLabel: "Backend",
+    main: "Implementa la API REST con Spring Boot o NestJS, gestiona MongoDB Atlas y documenta endpoints con Swagger.",
+    tasks: [
+      "Desarrollar endpoints de la API REST",
+      "Implementar lógica de negocio del sistema",
+      "Gestionar base de datos MongoDB Atlas",
+      "Documentar API con Swagger / OpenAPI 3.0",
+      "Manejar autenticación JWT y roles de acceso"
+    ],
+    module: "Spring Boot / NestJS"
+  },
+  {
+    num: "08", code: "QA", title: "QA Engineer",
+    email: "qa@sigprod.com",
+    color: "#84cc16", bg: "rgba(132,204,22,0.12)", tagBorder: "rgba(132,204,22,0.3)", tagText: "#bef264",
+    tagLabel: "Calidad",
+    main: "Planifica y ejecuta pruebas funcionales y no funcionales. Gestiona el ciclo de vida de defectos.",
+    tasks: [
+      "Diseñar y ejecutar casos de prueba",
+      "Gestionar defectos y su ciclo de vida",
+      "Generar reportes de calidad del software",
+      "Validar criterios de aceptación técnica",
+      "Realizar pruebas de regresión en cada sprint"
+    ],
+    module: "Pruebas / Defectos"
+  },
+  {
+    num: "09", code: "DO", title: "DevOps Engineer",
+    email: "devops@sigprod.com",
+    color: "#6366f1", bg: "rgba(99,102,241,0.12)", tagBorder: "rgba(99,102,241,0.3)", tagText: "#a5b4fc",
+    tagLabel: "Infraestructura",
+    main: "Gestiona CI/CD con GitHub Actions, dockerización y despliegue en Render. Monitorea infraestructura cloud.",
+    tasks: [
+      "Configurar pipelines CI/CD con GitHub Actions",
+      "Dockerizar servicios frontend y backend",
+      "Desplegar y gestionar entornos en Render",
+      "Administrar MongoDB Atlas y variables de entorno",
+      "Monitorear uptime e infraestructura cloud"
+    ],
+    module: "CI/CD / Docker / Render"
+  }
+];
+
+const grid = document.getElementById('grid');
+
+roles.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'role-card';
+  card.style.animationDelay = (i * 0.06) + 's';
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="role-avatar" style="background:${r.bg};color:${r.color};">${r.code}</div>
+      <div class="card-meta">
+        <h3>${r.title}</h3>
+        <div class="email">${r.email}</div>
+      </div>
+      <div class="role-num">${r.num}</div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+      <p class="main-resp">${r.main}</p>
+      <div class="tasks-label">Tareas en SIGPROD</div>
+      <ul class="task-list">
+        ${r.tasks.map(t => `<li><span style="display:block;width:4px;height:4px;border-radius:50%;background:${r.color};flex-shrink:0;margin-top:6px;"></span>${t}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="card-footer">
+      <span class="tag" style="color:${r.tagText};border-color:${r.tagBorder};background:${r.bg};">${r.tagLabel}</span>
+      <span style="font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;">${r.module}</span>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
